@@ -1,123 +1,188 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-  width: 800px; height: 600px;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #1a1a2e;
+body {
+  width: 800px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: #0D1117;
   padding: 30px;
-  display: flex;
-  gap: 20px;
 }
-.phone {
-  width: 340px;
-  background: #0f0f23;
-  border-radius: 20px;
-  border: 2px solid #333;
-  overflow: hidden;
+.header {
+  text-align: center;
+  margin-bottom: 24px;
 }
-.phone-header {
-  background: #2255aa;
-  padding: 12px 16px;
+.header h1 {
+  font-size: 24px;
+  color: #E6EDF3;
+  margin-bottom: 8px;
+}
+.header p {
+  font-size: 14px;
+  color: #8B949E;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.card {
+  background: #161B22;
+  border: 1px solid #30363D;
+  border-radius: 12px;
+  padding: 20px;
+}
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #E6EDF3;
+  margin-bottom: 4px;
+}
+.card-time {
+  font-size: 12px;
+  color: #8B949E;
+  margin-bottom: 10px;
+}
+.card-content {
+  font-size: 13px;
+  color: #C9D1D9;
+  line-height: 1.5;
+}
+.card-content .tag {
+  display: inline-block;
+  background: #1F6FEB33;
+  color: #58A6FF;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  margin: 2px 4px 2px 0;
+}
+.card-content .highlight {
+  color: #7EE787;
+  font-weight: 600;
+}
+.card-content .dim {
+  color: #8B949E;
+  font-size: 12px;
+}
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  padding: 16px;
+  background: linear-gradient(90deg, #238636, #1F6FEB);
+  border-radius: 8px;
+}
+.footer p {
   color: white;
   font-size: 14px;
   font-weight: 600;
 }
-.msg {
-  margin: 10px 12px;
-  background: #1e1e3a;
-  border-radius: 12px;
-  padding: 14px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #e0e0f0;
-}
-.msg .title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #48dbfb;
-  margin-bottom: 8px;
-}
-.msg .tag {
-  display: inline-block;
-  background: rgba(72,219,251,0.15);
-  color: #48dbfb;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 11px;
-  margin-right: 4px;
-}
-.msg .item {
-  padding: 3px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.msg .item:last-child { border: none; }
-.msg .num { color: #feca57; font-weight: 700; }
-.msg .highlight { color: #ff6b6b; }
-.right {
-  flex: 1;
+.stats {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  color: white;
+  gap: 30px;
+  margin-top: 12px;
 }
-.right h1 {
-  font-size: 28px;
-  margin-bottom: 12px;
-  background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.stat {
+  text-align: center;
 }
-.right p { color: #888; font-size: 15px; line-height: 1.8; margin-bottom: 10px; }
-.right .stat {
-  display: flex; gap: 30px; margin-top: 20px;
+.stat-num {
+  font-size: 24px;
+  font-weight: 900;
+  color: #E6EDF3;
 }
-.right .stat div { text-align: center; }
-.right .stat .n { font-size: 32px; font-weight: 800; color: #feca57; }
-.right .stat .l { font-size: 12px; color: #666; }
+.stat-label {
+  font-size: 11px;
+  color: #8B949E;
+}
 </style>
 </head>
 <body>
-<div class="phone">
-  <div class="phone-header">🤖 Hermes Agent</div>
-  <div class="msg">
-    <div class="title">📰 AI 每日信息</div>
-    <div class="item">🌐 Karpathy 加入 Anthropic</div>
-    <div class="item">🌐 Sam Altman 给 YC 创业公司 $200万 token</div>
-    <div class="item">🇨🇳 DeepSeek 修复 字符 bug</div>
-    <div class="item">🐦 @karpathy: 关于 AI Agent 的思考...</div>
+<div class="header">
+  <h1>🤖 每天早上醒来，Telegram 里已经有这些</h1>
+  <p>全部无人值守 · 凌晨自动执行 · MIMO 大模型驱动</p>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="card-icon">📰</div>
+    <div class="card-title">AI 新闻聚合</div>
+    <div class="card-time">⏰ 每天 3:00</div>
+    <div class="card-content">
+      <div class="dim">来源：HN + IT之家 + 15个Twitter账号</div>
+      <br>
+      <span class="highlight">1. OpenAI 发布 GPT-5</span><br>
+      性能提升 40%，价格下降 50%...<br><br>
+      <span class="highlight">2. Meta 开源 Llama 4</span><br>
+      400B 参数，支持 128K 上下文...<br><br>
+      <span class="tag">#AI</span> <span class="tag">#LLM</span> <span class="tag">#开源</span>
+    </div>
   </div>
-  <div class="msg">
-    <div class="title">📚 技术学习 Day 11</div>
-    <div class="tag">CUDA</div>
-    <div class="tag">合并访存</div>
-    <div class="item" style="margin-top:8px">合并访存 = 32个线程的请求打包成1次</div>
-    <div class="item">✅ process kernel 连续访问</div>
-    <div class="item"><span class="highlight">⚠️</span> transpose_kernel 非合并访问</div>
+
+  <div class="card">
+    <div class="card-icon">📚</div>
+    <div class="card-title">CUDA 技术学习</div>
+    <div class="card-time">⏰ 每天 5:00</div>
+    <div class="card-content">
+      <div class="dim">Day 15 / 30 · TensorRT 优化</div>
+      <br>
+      <span class="highlight">今日主题：Dynamic Batching</span><br><br>
+      当 batch_size < 8 时，GPU 利用率不足 30%...<br>
+      解决方案：收集请求，攒够 8 个再推理...<br><br>
+      <span class="tag">#CUDA</span> <span class="tag">#TensorRT</span> <span class="tag">#性能优化</span>
+    </div>
   </div>
-  <div class="msg">
-    <div class="title">🎯 面试题 Day 1</div>
-    <div class="tag">C++ 内存</div>
-    <div class="item">栈 vs 堆的区别？</div>
-    <div class="item">智能指针引用计数是原子的吗？</div>
+
+  <div class="card">
+    <div class="card-icon">🎯</div>
+    <div class="card-title">每日面试题</div>
+    <div class="card-time">⏰ 每天 7:00</div>
+    <div class="card-content">
+      <div class="dim">领域：C++ · Day 22</div>
+      <br>
+      <span class="highlight">Q: 虚函数表是怎么实现的？</span><br><br>
+      每个含虚函数的类有一个 vtable...<br>
+      对象头部 8 字节指向 vtable（vptr）...<br><br>
+      <span class="tag">#C++</span> <span class="tag">#面试</span> <span class="tag">#八股文</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">🤔</div>
+    <div class="card-title">每日思考题</div>
+    <div class="card-time">⏰ 每天 8:00</div>
+    <div class="card-content">
+      <div class="dim">领域：决策思维 · 第 3 轮</div>
+      <br>
+      <span class="highlight">在信息不完整时，你怎么做决策？</span><br><br>
+      → 70% 信息就行动 vs 等 90% 再说<br>
+      → 你有过"等太久错过机会"的经历吗？<br><br>
+      <span class="tag">#思考</span> <span class="tag">#决策</span> <span class="tag">#成长</span>
+    </div>
   </div>
 </div>
-<div class="right">
-  <h1>每日自动推送</h1>
-  <p>每天早上醒来，Telegram 里已经有：</p>
-  <p>📰 AI 新闻聚合（HN + IT之家 + Twitter）<br>
-     📚 技术学习（Day by Day 递进）<br>
-     🎧 英语听力（TTS 自动语音）<br>
-     🎯 面试题（C++ / CUDA / 系统设计）<br>
-     💰 理财知识（30天入门）</p>
-  <p style="color:#48dbfb">全部无人值守，MIMO 驱动</p>
-  <div class="stat">
-    <div><div class="n">10+</div><div class="l">定时任务</div></div>
-    <div><div class="n">24/7</div><div class="l">自动运行</div></div>
-    <div><div class="n">0</div><div class="l">人工干预</div></div>
+
+<div class="footer">
+  <p>核心机制：学习计划 + 历史记录 + 日期锚点 = 内容永不重复</p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">活跃任务</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">30+</div>
+      <div class="stat-label">天持续运行</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">次人工干预</div>
+    </div>
   </div>
 </div>
 </body>

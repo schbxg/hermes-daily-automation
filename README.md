@@ -36,14 +36,11 @@
 
 <div align="center">
 
-### AI 新闻聚合
-<img src="screenshots/ai-news.jpg" width="400" alt="AI News">
+### 每日推送总览
 
-### 技术学习推送
-<img src="screenshots/learning.jpg" width="400" alt="Learning">
+<img src="screenshots/overview.png" width="600" alt="Daily Automation Overview">
 
-### 面试题推送
-<img src="screenshots/interview.jpg" width="400" alt="Interview">
+*每天凌晨自动执行，早上醒来 Telegram 里已经排好队等你了*
 
 </div>
 
@@ -61,7 +58,7 @@
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/YOUR_USERNAME/hermes-daily-automation.git
+git clone https://github.com/schbxg/hermes-daily-automation.git
 cd hermes-daily-automation
 
 # 2. 复制配置模板
@@ -278,7 +275,7 @@ hermes cron pause <job_id>
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=YOUR_USERNAME/hermes-daily-automation&type=Date)](https://star-history.com/#YOUR_USERNAME/hermes-daily-automation&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=schbxg/hermes-daily-automation&type=Date)](https://star-history.com/#schbxg/hermes-daily-automation&Date)
 
 ---
 
