@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="screenshots/banner.png" width="100%" alt="Hermes Daily Automation — turn any LLM into self-running digital employees">
+
 # 🤖 Hermes Daily Automation
 
 **Build a team of self-running digital employees with the Hermes Agent, powered by Xiaomi MIMO (or any LLM)**

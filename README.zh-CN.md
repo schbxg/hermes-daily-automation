@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="screenshots/banner.png" width="100%" alt="Hermes Daily Automation — 把任意大模型变成自动运转的数字员工">
+
 # 🤖 Hermes Daily Automation
 
 **用 MIMO 大模型驱动 Hermes Agent，构建每日自动运转的数字员工体系**
