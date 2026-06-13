@@ -3,187 +3,163 @@
 <head>
 <meta charset="utf-8">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  width: 800px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  background: #0D1117;
-  padding: 30px;
-}
-.header {
-  text-align: center;
-  margin-bottom: 24px;
-}
-.header h1 {
-  font-size: 24px;
-  color: #E6EDF3;
-  margin-bottom: 8px;
-}
-.header p {
-  font-size: 14px;
-  color: #8B949E;
-}
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.card {
-  background: #161B22;
-  border: 1px solid #30363D;
-  border-radius: 12px;
-  padding: 20px;
-}
-.card-icon {
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-.card-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #E6EDF3;
-  margin-bottom: 4px;
-}
-.card-time {
-  font-size: 12px;
-  color: #8B949E;
-  margin-bottom: 10px;
-}
-.card-content {
-  font-size: 13px;
-  color: #C9D1D9;
-  line-height: 1.5;
-}
-.card-content .tag {
-  display: inline-block;
-  background: #1F6FEB33;
-  color: #58A6FF;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  margin: 2px 4px 2px 0;
-}
-.card-content .highlight {
-  color: #7EE787;
-  font-weight: 600;
-}
-.card-content .dim {
-  color: #8B949E;
-  font-size: 12px;
-}
-.footer {
-  text-align: center;
-  margin-top: 20px;
-  padding: 16px;
-  background: linear-gradient(90deg, #238636, #1F6FEB);
-  border-radius: 8px;
-}
-.footer p {
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-}
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 12px;
-}
-.stat {
-  text-align: center;
-}
-.stat-num {
-  font-size: 24px;
-  font-weight: 900;
-  color: #E6EDF3;
-}
-.stat-label {
-  font-size: 11px;
-  color: #8B949E;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 760px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 760px at 78% 18%, #1b2a4a 0%, #0d1117 55%, #090c12 100%);
+    display: flex; align-items: center; gap: 56px;
+    padding: 0 64px; overflow: hidden;
+  }
+
+  /* ---------- left: pitch ---------- */
+  .left { width: 520px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #1f6feb22; border: 1px solid #1f6feb55;
+    color: #6ab3f3; font-size: 13px; font-weight: 600;
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
+  }
+  .left h1 {
+    font-size: 44px; line-height: 1.18; color: #f0f6fc;
+    font-weight: 800; letter-spacing: -0.5px; margin-bottom: 18px;
+  }
+  .left h1 .grad {
+    background: linear-gradient(90deg, #6ab3f3, #a371f7);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .left p.sub { font-size: 17px; color: #9aa7b4; line-height: 1.6; margin-bottom: 28px; }
+  .feat { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .feat .ico {
+    width: 34px; height: 34px; flex: none; border-radius: 9px;
+    background: #161b22; border: 1px solid #2b3240;
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+  }
+  .feat span { font-size: 15px; color: #c9d4df; }
+  .feat span b { color: #f0f6fc; font-weight: 600; }
+  .stats { display: flex; gap: 34px; margin-top: 30px; }
+  .stat .n {
+    font-size: 30px; font-weight: 800;
+    background: linear-gradient(90deg, #7ee787, #6ab3f3);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stat .l { font-size: 12px; color: #6d7f8f; margin-top: 2px; }
+
+  /* ---------- right: phone ---------- */
+  .phone {
+    width: 360px; height: 720px; flex: none;
+    background: #0b0f14; border-radius: 46px;
+    border: 2px solid #222a35;
+    box-shadow: 0 40px 90px -20px rgba(0,0,0,.7), 0 0 0 8px #11161d;
+    padding: 12px; position: relative;
+  }
+  .notch {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 130px; height: 26px; background: #0b0f14; border-radius: 0 0 16px 16px; z-index: 5;
+  }
+  .screen {
+    width: 100%; height: 100%; border-radius: 36px; overflow: hidden;
+    background:
+      linear-gradient(180deg, #17212b 0 86px, transparent 86px),
+      radial-gradient(circle at 20% 10%, #14202e 0, #0e1621 60%);
+    display: flex; flex-direction: column;
+  }
+  .tg-head {
+    height: 86px; padding: 34px 16px 0; display: flex; align-items: center; gap: 11px;
+    border-bottom: 1px solid #0b1118;
+  }
+  .avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, #2aabee, #229ed9);
+    display: flex; align-items: center; justify-content: center; font-size: 19px;
+  }
+  .tg-head .name { font-size: 15px; font-weight: 600; color: #fff; }
+  .tg-head .status { font-size: 12px; color: #5eb5f7; margin-top: 1px; }
+  .chat { flex: 1; padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .day {
+    align-self: center; font-size: 11px; color: #aebfcc;
+    background: #1c2733; padding: 3px 12px; border-radius: 999px; margin-bottom: 2px;
+  }
+  .bubble {
+    max-width: 90%; background: #182533; border-radius: 14px 14px 14px 5px;
+    padding: 10px 12px; color: #e7eef5; font-size: 12.5px; line-height: 1.5;
+    box-shadow: 0 1px 2px rgba(0,0,0,.25);
+  }
+  .bubble .t { font-weight: 700; color: #fff; font-size: 13px; }
+  .bubble .meta { color: #6d7f8f; font-size: 11px; margin: 1px 0 6px; }
+  .bubble .hl { color: #7ee787; font-weight: 600; }
+  .bubble .lk { color: #6ab3f3; }
+  .bubble .time { float: right; color: #5e6f7e; font-size: 10px; margin: 4px 0 -2px 8px; }
+  .bubble .tags { margin-top: 6px; }
+  .bubble .tag {
+    display: inline-block; background: #6ab3f322; color: #6ab3f3;
+    font-size: 10px; padding: 1px 7px; border-radius: 5px; margin-right: 4px;
+  }
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>🤖 每天早上醒来，Telegram 里已经有这些</h1>
-  <p>全部无人值守 · 凌晨自动执行 · MIMO 大模型驱动</p>
-</div>
+  <div class="left">
+    <div class="badge">🤖 Hermes Daily Automation</div>
+    <h1>你的<span class="grad">数字员工</span><br>每天清晨已就位</h1>
+    <p class="sub">10+ 个定时任务凌晨无人值守地跑完，<br>结果整齐地躺在你的 Telegram 里。</p>
 
-<div class="grid">
-  <div class="card">
-    <div class="card-icon">📰</div>
-    <div class="card-title">AI 新闻聚合</div>
-    <div class="card-time">⏰ 每天 3:00</div>
-    <div class="card-content">
-      <div class="dim">来源：HN + IT之家 + 15个Twitter账号</div>
-      <br>
-      <span class="highlight">1. OpenAI 发布 GPT-5</span><br>
-      性能提升 40%，价格下降 50%...<br><br>
-      <span class="highlight">2. Meta 开源 Llama 4</span><br>
-      400B 参数，支持 128K 上下文...<br><br>
-      <span class="tag">#AI</span> <span class="tag">#LLM</span> <span class="tag">#开源</span>
+    <div class="feat"><div class="ico">📰</div><span><b>AI 新闻日报</b> · 抓 HN + 国内 + 推特</span></div>
+    <div class="feat"><div class="ico">📚</div><span><b>技术学习</b> · 按天推进，结合真实代码</span></div>
+    <div class="feat"><div class="ico">🎯</div><span><b>面试题 / 专题速成</b> · 跑完自动暂停</span></div>
+    <div class="feat"><div class="ico">🌙</div><span><b>每晚"做梦"复盘</b> · AI 自己更新记忆</span></div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">10+</div><div class="l">定时任务</div></div>
+      <div class="stat"><div class="n">30+</div><div class="l">天持续运行</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">次人工干预</div></div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-icon">📚</div>
-    <div class="card-title">CUDA 技术学习</div>
-    <div class="card-time">⏰ 每天 5:00</div>
-    <div class="card-content">
-      <div class="dim">Day 15 / 30 · TensorRT 优化</div>
-      <br>
-      <span class="highlight">今日主题：Dynamic Batching</span><br><br>
-      当 batch_size < 8 时，GPU 利用率不足 30%...<br>
-      解决方案：收集请求，攒够 8 个再推理...<br><br>
-      <span class="tag">#CUDA</span> <span class="tag">#TensorRT</span> <span class="tag">#性能优化</span>
-    </div>
-  </div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="tg-head">
+        <div class="avatar">🤖</div>
+        <div>
+          <div class="name">Hermes Daily</div>
+          <div class="status">bot · 自动推送</div>
+        </div>
+      </div>
+      <div class="chat">
+        <div class="day">今天</div>
 
-  <div class="card">
-    <div class="card-icon">🎯</div>
-    <div class="card-title">每日面试题</div>
-    <div class="card-time">⏰ 每天 7:00</div>
-    <div class="card-content">
-      <div class="dim">领域：C++ · Day 22</div>
-      <br>
-      <span class="highlight">Q: 虚函数表是怎么实现的？</span><br><br>
-      每个含虚函数的类有一个 vtable...<br>
-      对象头部 8 字节指向 vtable（vptr）...<br><br>
-      <span class="tag">#C++</span> <span class="tag">#面试</span> <span class="tag">#八股文</span>
-    </div>
-  </div>
+        <div class="bubble">
+          <div class="t">📰 AI 每日信息</div>
+          <div class="meta">来源：HN + 国内 + 6 个推特账号</div>
+          <span class="hl">1. OpenAI 发布新一代模型</span><br>推理成本下降，长上下文增强…<br>
+          <span class="hl">2. 开源社区放出新权重</span><br>性能逼近闭源旗舰…
+          <div class="tags"><span class="tag">#AI</span><span class="tag">#LLM</span><span class="tag">#开源</span></div>
+          <span class="time">03:01</span>
+        </div>
 
-  <div class="card">
-    <div class="card-icon">🤔</div>
-    <div class="card-title">每日思考题</div>
-    <div class="card-time">⏰ 每天 8:00</div>
-    <div class="card-content">
-      <div class="dim">领域：决策思维 · 第 3 轮</div>
-      <br>
-      <span class="highlight">在信息不完整时，你怎么做决策？</span><br><br>
-      → 70% 信息就行动 vs 等 90% 再说<br>
-      → 你有过"等太久错过机会"的经历吗？<br><br>
-      <span class="tag">#思考</span> <span class="tag">#决策</span> <span class="tag">#成长</span>
-    </div>
-  </div>
-</div>
+        <div class="bubble">
+          <div class="t">📚 技术学习 Day 15 / 30</div>
+          <div class="meta">今日主题：Dynamic Batching</div>
+          当请求零散时 GPU 利用率不足三成 —— 攒够一批再推理，吞吐立刻翻倍。<span class="lk"> 详见笔记 ›</span>
+          <div class="tags"><span class="tag">#性能优化</span></div>
+          <span class="time">05:01</span>
+        </div>
 
-<div class="footer">
-  <p>核心机制：学习计划 + 历史记录 + 日期锚点 = 内容永不重复</p>
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">8</div>
-      <div class="stat-label">活跃任务</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">30+</div>
-      <div class="stat-label">天持续运行</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">0</div>
-      <div class="stat-label">次人工干预</div>
+        <div class="bubble">
+          <div class="t">🎯 每日面试题 · Day 22</div>
+          <span class="hl">Q：虚函数是怎么实现的？</span><br>每个含虚函数的类有一张表，对象头部存一个指针指向它…
+          <div class="tags"><span class="tag">#C++</span><span class="tag">#面试</span></div>
+          <span class="time">07:00</span>
+        </div>
+
+        <div class="bubble">
+          <div class="t">🌙 每日复盘（做梦）</div>
+          <div class="meta">凌晨回顾昨天的工作会话</div>
+          ✅ 完成：重构推送链路<br>💡 教训：先写计划再动手<br>⚠️ 已把经验写入 <span class="lk">MEMORY.md</span>
+          <span class="time">03:00</span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </body>
 </html>
