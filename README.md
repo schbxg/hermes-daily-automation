@@ -4,7 +4,7 @@
 
 **用 MIMO 大模型驱动 Hermes Agent，构建每日自动运转的数字员工体系**
 
-[![License: MIT](https://img.shields.io/badge/License-MMIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Hermes Agent](https://img.shields.io/badge/Hermes%20Agent-Compatible-blueviolet)](https://github.com/NousResearch/hermes-agent)
 [![MIMO](https://img.shields.io/badge/Xiaomi%20MIMO-Supported-orange)](https://github.com/XiaoMi)
 
@@ -93,7 +93,7 @@ hermes cron run <job_id>
 | 模板 | 说明 | 推荐频率 |
 |------|------|----------|
 | [AI新闻](cron-jobs/ai-news.md) | 抓取 HN + IT之家 + Twitter，生成中文摘要 | 每天 3:00 |
-| [推文日报](cron-jobs/tweet-daily.md) | 抓取指定 Twitter 账号最新推文 | 每天 3:00 |
+| [推文草稿](cron-jobs/tweet-draft.md) | 每天生成 2-3 条推文草稿，人工审核后发布 | 每天 3:00 |
 
 ### 📚 学习类
 
