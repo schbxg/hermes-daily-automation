@@ -30,6 +30,7 @@ I run 10+ scheduled jobs with this setup. Every day it automatically delivers:
 - 🎯 **Interview questions** (C++ / CUDA / system design)
 - 💰 **Personal finance** (a 30-day starter plan)
 - 🤔 **Daily thinking prompts** (rotating across 7 domains)
+- 🤖 **A nightly self-review** where the agent "dreams" — recaps yesterday and updates its own memory
 
 All unattended. Jobs fire in the early morning, and the results are waiting in Telegram when you wake up.
 
@@ -105,6 +106,14 @@ hermes cron run <job_id>
 | [Tech Learning](cron-jobs/learning.md) | Advances through a tech course on a plan | Daily 5:00 |
 | [English](cron-jobs/english.md) | Vocabulary + listening + TTS audio | Daily 7:30 |
 | [Interview Prep](cron-jobs/interview.md) | One interview question + answer per day | Daily 7:00 |
+| [Code Reading](cron-jobs/code-reading.md) | Read a huge file over N days, then auto-pauses itself | Daily 20:00 |
+| [Topic Study](cron-jobs/topic-study.md) | N-day deep dive on one topic, with real-code examples | Daily 21:00 |
+
+### 🤖 Self-Reflection
+
+| Template | Description | Suggested Schedule |
+|----------|-------------|--------------------|
+| [Daily Review ("Dreaming")](cron-jobs/daily-review.md) | At 3 AM the agent reviews yesterday's sessions, writes lessons to memory, and suggests new skills | Daily 3:00 |
 
 ### 💡 Lifestyle
 
@@ -171,6 +180,22 @@ Reusable, parameterized prompt building blocks you can adapt for your own jobs �
 ```
 
 The key idea: **use the file system as the agent's external memory** so continuity holds across sessions.
+
+### Finite Plans That Pause Themselves
+
+Not every job should run forever. A course or a code-reading plan has an end. Each such job
+computes "what day is it", and once the plan is over it calls
+`cronjob(action='pause', job_id=<self>)` to **pause itself** — no zombie jobs, no manual cleanup.
+
+```
+Day 1 ─▶ Day 2 ─▶ ... ─▶ Day N ─▶ "plan finished" ─▶ pause(self)
+```
+
+### Grounding in Your Real Code
+
+Learning jobs don't just explain concepts in the abstract. You point them at your project
+directory, and they pull **real examples from your actual code** (with file references). What
+you learn maps directly onto what you're building, so it sticks.
 
 ---
 
