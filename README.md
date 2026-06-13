@@ -2,273 +2,280 @@
 
 # 🤖 Hermes Daily Automation
 
-**用 MIMO 大模型驱动 Hermes Agent，构建每日自动运转的数字员工体系**
+**Build a team of self-running digital employees with the Hermes Agent, powered by Xiaomi MIMO (or any LLM)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Hermes Agent](https://img.shields.io/badge/Hermes%20Agent-Compatible-blueviolet)](https://github.com/NousResearch/hermes-agent)
 [![MIMO](https://img.shields.io/badge/Xiaomi%20MIMO-Supported-orange)](https://github.com/XiaoMi)
 
-*「AI 不应该只是你问它答的工具，它应该是一个能独立运转的数字员工」*
+*"AI shouldn't just be a tool you query. It should be a digital employee that runs on its own."*
 
-[看效果](#效果展示) · [快速开始](#快速开始) · [模板列表](#模板列表) · [工作原理](#工作原理)
+**English** · [简体中文](README.zh-CN.md)
+
+[Demo](#demo) · [Quick Start](#quick-start) · [Templates](#templates) · [How It Works](#how-it-works)
 
 </div>
 
 ---
 
-## 这是什么
+## What Is This
 
-这是一个基于 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 的**自动化模板集合**，帮助你快速搭建每日自动推送系统。
+A collection of **automation templates** built on top of [Hermes Agent](https://github.com/NousResearch/hermes-agent) that help you spin up a daily, hands-off push system in minutes.
 
-我自己用这套体系跑了 10+ 个定时任务，每天自动推送：
-- 📰 AI 新闻聚合（抓取 HN + IT之家 + Twitter）
-- 📚 技术学习（40天课程，Day by Day 推进）
-- 🎧 英语听力（自动生成 TTS 音频）
-- 🎯 面试题（C++ / CUDA / 系统设计）
-- 💰 理财知识（30天入门计划）
-- 🤔 每日思考题（7个领域轮换）
+I run 10+ scheduled jobs with this setup. Every day it automatically delivers:
 
-全部无人值守，每天凌晨自动执行，结果推送到 Telegram。
+- 📰 **AI news digest** (scrapes Hacker News + tech sites + Twitter)
+- 📚 **Tech learning** (a 40-day course, advanced day by day)
+- 🎧 **English listening** (auto-generated TTS audio)
+- 🎯 **Interview questions** (C++ / CUDA / system design)
+- 💰 **Personal finance** (a 30-day starter plan)
+- 🤔 **Daily thinking prompts** (rotating across 7 domains)
+
+All unattended. Jobs fire in the early morning, and the results are waiting in Telegram when you wake up.
 
 ---
 
-## 效果展示
+## Demo
 
 <div align="center">
 
-### 每日推送总览
+### Daily Push Overview
 
 <img src="screenshots/overview.png" width="600" alt="Daily Automation Overview">
 
-*每天凌晨自动执行，早上醒来 Telegram 里已经排好队等你了*
+*Everything runs at night — by morning your Telegram is already lined up for you.*
 
 </div>
 
 ---
 
-## 快速开始
+## Quick Start
 
-### 前置条件
+### Prerequisites
 
-1. 安装 [Hermes Agent](https://github.com/NousResearch/hermes-agent)
-2. 配置一个 LLM provider（MIMO / DeepSeek / OpenAI / Claude 都可以）
-3. 配置 Telegram 或其他消息平台
+1. Install [Hermes Agent](https://github.com/NousResearch/hermes-agent)
+2. Configure an LLM provider (MIMO / DeepSeek / OpenAI / Claude all work)
+3. Configure Telegram or another messaging platform
 
-### 安装步骤
+### Installation
 
 ```bash
-# 1. 克隆仓库
+# 1. Clone the repo
 git clone https://github.com/schbxg/hermes-daily-automation.git
 cd hermes-daily-automation
 
-# 2. 复制配置模板
+# 2. Copy the config template
 cp config-template.yaml ~/.hermes/config.yaml
 
-# 3. 创建定时任务（以 AI 新闻为例）
-hermes cron create "0 3 * * *" --name "AI新闻" --prompt "$(cat cron-jobs/ai-news.md)"
+# 3. Create a scheduled job (AI news as an example)
+hermes cron create "0 3 * * *" --name "AI News" --prompt "$(cat cron-jobs/ai-news.md)"
 
-# 4. 查看任务列表
+# 4. List your jobs
 hermes cron list
 ```
 
-### 自定义你的第一个任务
+### Customize Your First Job
 
 ```bash
-# 编辑 prompt 模板
+# Edit the prompt template
 vim cron-jobs/ai-news.md
 
-# 创建定时任务
-hermes cron create "0 8 * * *" --name "我的日报" --prompt "$(cat cron-jobs/ai-news.md)"
+# Create the scheduled job
+hermes cron create "0 8 * * *" --name "My Daily" --prompt "$(cat cron-jobs/ai-news.md)"
 
-# 测试运行
+# Test run it
 hermes cron run <job_id>
 ```
 
 ---
 
-## 模板列表
+## Templates
 
-### 📰 信息聚合类
+### 📰 Information Aggregation
 
-| 模板 | 说明 | 推荐频率 |
-|------|------|----------|
-| [AI新闻](cron-jobs/ai-news.md) | 抓取 HN + IT之家 + Twitter，生成中文摘要 | 每天 3:00 |
-| [推文草稿](cron-jobs/tweet-draft.md) | 每天生成 2-3 条推文草稿，人工审核后发布 | 每天 3:00 |
+| Template | Description | Suggested Schedule |
+|----------|-------------|--------------------|
+| [AI News](cron-jobs/ai-news.md) | Scrapes HN + tech sites + Twitter, generates a digest | Daily 3:00 |
+| [Tweet Drafts](cron-jobs/tweet-draft.md) | Generates 2-3 tweet drafts daily for human review | Daily 3:00 |
 
-### 📚 学习类
+### 📚 Learning
 
-| 模板 | 说明 | 推荐频率 |
-|------|------|----------|
-| [技术学习](cron-jobs/learning.md) | 按计划推进技术课程 | 每天 5:00 |
-| [英语学习](cron-jobs/english.md) | 英语词汇 + 听力 + TTS 音频 | 每天 7:30 |
-| [面试题](cron-jobs/interview.md) | 每日一道面试题 + 答案 | 每天 7:00 |
+| Template | Description | Suggested Schedule |
+|----------|-------------|--------------------|
+| [Tech Learning](cron-jobs/learning.md) | Advances through a tech course on a plan | Daily 5:00 |
+| [English](cron-jobs/english.md) | Vocabulary + listening + TTS audio | Daily 7:30 |
+| [Interview Prep](cron-jobs/interview.md) | One interview question + answer per day | Daily 7:00 |
 
-### 💡 生活类
+### 💡 Lifestyle
 
-| 模板 | 说明 | 推荐频率 |
-|------|------|----------|
-| [每日思考](cron-jobs/thinking.md) | 哲学/创造力/决策等领域轮换 | 每天 8:00 |
-| [理财知识](cron-jobs/finance.md) | 30天理财入门计划 | 每天 21:00 |
+| Template | Description | Suggested Schedule |
+|----------|-------------|--------------------|
+| [Daily Thinking](cron-jobs/thinking.md) | Rotates through philosophy / creativity / decision-making | Daily 8:00 |
+| [Finance](cron-jobs/finance.md) | A 30-day personal finance starter plan | Daily 21:00 |
 
-### 🔧 核心机制
+### 🧩 Prompt Templates
 
-| 文件 | 说明 |
-|------|------|
-| [AGENTS模板](AGENTS-template.md) | 项目级 AI onboarding 文件模板 |
-| [内容递进](skills/content-progression.md) | 防止 Cron 内容重复的 Skill |
+Reusable, parameterized prompt building blocks you can adapt for your own jobs — see [prompt-templates/](prompt-templates/).
+
+### 🔧 Core Mechanics
+
+| File | Description |
+|------|-------------|
+| [AGENTS template](AGENTS-template.md) | Project-level AI onboarding file template |
+| [Content Progression](skills/content-progression.md) | A Skill that prevents cron jobs from repeating content |
 
 ---
 
-## 工作原理
+## How It Works
 
-### 核心架构
+### Architecture
 
 ```
 ┌─────────────────────────────────────────────┐
-│           Hermes Agent (框架层)              │
+│           Hermes Agent (framework)          │
 │  ┌─────────┐ ┌─────────┐ ┌─────────────┐  │
 │  │  Cron   │ │ Memory  │ │   Skills    │  │
-│  │ 调度器  │ │ 记忆系统 │ │ 经验沉淀    │  │
+│  │ schedule│ │ system  │ │ experience  │  │
 │  └────┬────┘ └────┬────┘ └──────┬──────┘  │
 │       │           │             │          │
 │  ┌────▼───────────▼─────────────▼──────┐  │
 │  │         Orchestration Loop          │  │
-│  │    (编排循环: Prompt → LLM → Tool)  │  │
+│  │      (Prompt → LLM → Tool)          │  │
 │  └────┬────────────────────────────────┘  │
 │       │                                    │
 └───────┼────────────────────────────────────┘
         │
         ▼
 ┌───────────────┐
-│   LLM 模型    │  ← MIMO / DeepSeek / Claude / GPT
+│   LLM Model   │  ← MIMO / DeepSeek / Claude / GPT
 └───────┬───────┘
         │
         ▼
 ┌───────────────┐
-│  消息平台     │  ← Telegram / Discord / Slack
+│  Messaging    │  ← Telegram / Discord / Slack
 └───────────────┘
 ```
 
-### 内容递进机制（防重复）
+### Content Progression (Anti-Repetition)
 
 ```
 ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│ 学习计划文件  │────▶│  Cron Job    │────▶│ 历史记录目录  │
-│ (静态框架)    │     │ (每日触发)   │     │ (动态积累)    │
+│ Plan file    │────▶│  Cron Job    │────▶│ History dir  │
+│ (static)     │     │ (daily fire) │     │ (accumulates)│
 └──────────────┘     └──────┬───────┘     └──────────────┘
                             │
-                     1. 读计划 → 今天第几天？
-                     2. 读历史 → 之前讲过什么？
-                     3. 生成内容 → 不重复
-                     4. 保存到历史目录
+                  1. Read plan → what day is it?
+                  2. Read history → what was covered?
+                  3. Generate content → no repeats
+                  4. Save to history dir
 ```
 
-关键：用**文件系统做 Agent 的外部记忆**，跨 session 也能保持连续性。
+The key idea: **use the file system as the agent's external memory** so continuity holds across sessions.
 
 ---
 
-## 最佳实践
+## Best Practices
 
-### 1. 时间分散，不要堆在一起
+### 1. Spread Out the Timing
 
 ```yaml
-# ❌ 不好：7 个任务全在 3:00
-3:00 - 任务1, 任务2, 任务3, 任务4, 任务5, 任务6, 任务7
+# ❌ Bad: 7 jobs all at 3:00
+3:00 - job1, job2, job3, job4, job5, job6, job7
 
-# ✅ 好：分散到不同时间
-3:00 - AI新闻
-5:00 - 技术学习
-7:00 - 面试题
-7:30 - 英语学习
-8:00 - 每日思考
-21:00 - 理财 + 推特提醒
+# ✅ Good: spread across the day
+3:00  - AI News
+5:00  - Tech Learning
+7:00  - Interview Prep
+7:30  - English
+8:00  - Daily Thinking
+21:00 - Finance + Tweet reminders
 ```
 
-### 2. Prompt 要包含"读历史 → 避免重复 → 保存"
+### 2. Every Prompt Should "Read History → Avoid Repeats → Save"
 
 ```markdown
-## 步骤1：确定今天是第几天
-运行 date +%Y-%m-%d，计算从 Day 1 开始的天数。
+## Step 1: Determine what day it is
+Run `date +%Y-%m-%d`, compute days elapsed since Day 1.
 
-## 步骤2：读取历史记录
-ls /path/to/history/  # 读最近 3 天
+## Step 2: Read history
+ls /path/to/history/  # read the last 3 days
 
-## 步骤3：生成内容
-确保与历史不同。
+## Step 3: Generate content
+Make sure it differs from history.
 
-## 步骤4：保存到历史
-保存到 /path/to/history/day_XX.md
+## Step 4: Save to history
+Write to /path/to/history/day_XX.md
 ```
 
-### 3. AGENTS.md 是给 AI 的 onboarding
+### 3. AGENTS.md Is Onboarding for the AI
 
 ```markdown
-# 项目简介
-# 目录结构
-# 代码规范
-# 已知坑点
-# 工作流程
+# Project overview
+# Directory structure
+# Code conventions
+# Known pitfalls
+# Workflow
 ```
 
 ---
 
-## 常见问题
+## FAQ
 
-### Q: 会不会每天推送同样的内容？
+### Q: Will it push the same content every day?
 
-不会。每个模板都包含：
-1. 学习计划文件（静态框架）
-2. 历史记录目录（动态积累）
-3. "第几天"计算（时间锚点）
+No. Every template combines:
+1. A plan file (static framework)
+2. A history directory (accumulating record)
+3. A "what day is it" anchor (time anchor)
 
-三者结合保证内容递进不重复。
+Together these guarantee content progresses without repeating.
 
-### Q: 用什么模型最好？
+### Q: Which model is best?
 
-| 模型 | 适合场景 | 价格 |
-|------|----------|------|
-| Xiaomi MIMO | 日常事务、中文内容 | 便宜 |
-| DeepSeek | 技术学习、代码分析 | 极便宜 |
-| Claude Sonnet | 复杂推理、长文档 | 中等 |
-| GPT-4o | 通用任务 | 中等 |
+| Model | Best For | Cost |
+|-------|----------|------|
+| Xiaomi MIMO | Everyday tasks, Chinese content | Cheap |
+| DeepSeek | Tech learning, code analysis | Very cheap |
+| Claude Sonnet | Complex reasoning, long docs | Medium |
+| GPT-4o | General-purpose | Medium |
 
-建议：日常用 MIMO/DeepSeek，复杂任务用 Claude/GPT。
+Recommendation: MIMO/DeepSeek for daily tasks, Claude/GPT for complex ones.
 
-### Q: 可以用 Discord/Slack 代替 Telegram 吗？
+### Q: Can I use Discord/Slack instead of Telegram?
 
-可以。Hermes 支持 10+ 消息平台，配置方式相同。
+Yes. Hermes supports 10+ messaging platforms with the same config approach.
 
-### Q: 如何调试 Cron Job？
+### Q: How do I debug a cron job?
 
 ```bash
-# 手动触发一次
+# Trigger once manually
 hermes cron run <job_id>
 
-# 查看运行日志
+# Follow logs
 hermes logs --follow
 
-# 暂停任务
+# Pause a job
 hermes cron pause <job_id>
 ```
 
 ---
 
-## 贡献
+## Contributing
 
-欢迎提交 PR 添加新的 Cron Job 模板！
+PRs adding new cron job templates are welcome!
 
-模板格式：
+Template format:
 ```markdown
-# 任务名称
+# Job name
 
-[描述任务目的]
+[Describe the job's purpose]
 
-## 步骤
+## Steps
 1. ...
 2. ...
 
-## 输出格式
-[定义输出模板]
+## Output format
+[Define the output template]
 ```
 
 ---
@@ -279,16 +286,16 @@ hermes cron pause <job_id>
 
 ---
 
-## 致谢
+## Acknowledgements
 
-- [Hermes Agent](https://github.com/NousResearch/hermes-agent) — AI Agent 框架
-- [Nous Research](https://nousresearch.com) — 框架开发团队
-- [Xiaomi MIMO](https://github.com/XiaoMi) — 大模型支持
+- [Hermes Agent](https://github.com/NousResearch/hermes-agent) — the AI agent framework
+- [Nous Research](https://nousresearch.com) — the team behind the framework
+- [Xiaomi MIMO](https://github.com/XiaoMi) — LLM support
 
 ---
 
 <div align="center">
 
-**如果觉得有用，请点个 ⭐ Star！**
+**If you find this useful, please drop a ⭐ Star!**
 
 </div>
