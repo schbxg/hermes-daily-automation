@@ -1,5 +1,9 @@
 # Hermes Agent 配置模板
 # 复制到 ~/.hermes/config.yaml，填入你的 API key
+#
+# 本仓库的每日任务默认状态目录（由 scripts/install-demo.sh 创建）：
+#   ~/.hermes/daily/   或  $HERMES_DAILY_HOME
+# 配置模型与消息渠道请优先使用：hermes setup
 
 # === 模型配置 ===
 model:

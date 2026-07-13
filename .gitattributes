@@ -1,0 +1,6 @@
+# Keep screenshots HTML out of GitHub language stats (was showing as 100% HTML)
+screenshots/*.html linguist-vendored
+screenshots/*.html linguist-documentation
+
+# Markdown templates are the primary content of this repo
+*.md linguist-detectable=true

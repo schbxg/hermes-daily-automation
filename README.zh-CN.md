@@ -2,324 +2,257 @@
 
 <img src="screenshots/banner.png" width="100%" alt="Hermes Daily Automation — 把任意大模型变成自动运转的数字员工">
 
-# 🤖 Hermes Daily Automation
+# Hermes Daily Automation
 
-**用 MIMO 大模型驱动 Hermes Agent，构建每日自动运转的数字员工体系**
+**个人 AI 晨间操作系统** — 新闻、学习、面试、GitHub 摘要、深夜复盘写回记忆。  
+基于 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 的 **Progressive Cron（内容递进）** 模板包，可用 MIMO / DeepSeek / OpenAI / Claude 等。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Hermes Agent](https://img.shields.io/badge/Hermes%20Agent-Compatible-blueviolet)](https://github.com/NousResearch/hermes-agent)
-[![MIMO](https://img.shields.io/badge/Xiaomi%20MIMO-Supported-orange)](https://github.com/XiaoMi)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-*「AI 不应该只是你问它答的工具，它应该是一个能独立运转的数字员工」*
+*AI 不该只是你问它答，而该是会自己上班的数字员工。*
 
 **简体中文** · [English](README.md)
 
-[看效果](#效果展示) · [快速开始](#快速开始) · [模板列表](#模板列表) · [工作原理](#工作原理)
+[5 分钟 Demo](#-5-分钟-demo) · [Skills 安装](#-安装-skills-agentskillsio) · [样例输出](#-效果与样例) · [Progressive Cron](#-progressive-cron-内容递进) · [模板列表](#-模板列表) · [成本](#-成本说明)
 
 </div>
 
 ---
 
-## 这是什么
+## 为什么做这个
 
-这是一个基于 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 的**自动化模板集合**，帮助你快速搭建每日自动推送系统。
+Hermes 已有 Cron / Memory / Skills。多数人缺的是一套**开箱即用的个人 OS**：默认路径、防重复课程机制、可对照的样例输出。
 
-我自己用这套体系跑了 10+ 个定时任务，每天自动推送：
-- 📰 AI 新闻聚合（抓取 HN + IT之家 + Twitter）
-- 📚 技术学习（40天课程，Day by Day 推进）
-- 🎧 英语听力（自动生成 TTS 音频）
-- 🎯 面试题（C++ / CUDA / 系统设计）
-- 💰 理财知识（30天入门计划）
-- 🤔 每日思考题（7个领域轮换）
-- 🤖 每晚自我复盘（Agent「做梦」回顾昨天，并更新自己的记忆）
-
-全部无人值守，每天凌晨自动执行，结果推送到 Telegram。
+| 你得到的 | 不是 |
+|----------|------|
+| 可安装的每日任务 + `~/.hermes/daily/` 默认目录 | 又一个 Agent 框架 |
+| **Progressive Cron**（计划 + 历史 + 第几天） | 每天重复 Day 1 的无状态 prompt |
+| 有终点的课程 **跑完自己 pause** | 计划结束后的僵尸任务 |
+| 中英模板 | 只有中文或只有英文 README |
 
 ---
 
-## 效果展示
+## ⚡ 5 分钟 Demo
 
-<div align="center">
-
-### 每日推送总览
-
-<img src="screenshots/overview.png" width="600" alt="Daily Automation Overview">
-
-*每天凌晨自动执行，早上醒来 Telegram 里已经排好队等你了*
-
-</div>
-
----
-
-## 快速开始
-
-### 前置条件
-
-1. 安装 [Hermes Agent](https://github.com/NousResearch/hermes-agent)
-2. 配置一个 LLM provider（MIMO / DeepSeek / OpenAI / Claude 都可以）
-3. 配置 Telegram 或其他消息平台
-
-### 安装步骤
+**前置：** 已安装 [Hermes Agent](https://github.com/NousResearch/hermes-agent)，配好模型与消息渠道（Telegram 等）。
 
 ```bash
-# 1. 克隆仓库
 git clone https://github.com/schbxg/hermes-daily-automation.git
 cd hermes-daily-automation
 
-# 2. 复制配置模板
-cp config-template.yaml ~/.hermes/config.yaml
+chmod +x scripts/install-demo.sh
+./scripts/install-demo.sh
+# 英文 prompt：HERMES_DAILY_LANG=en ./scripts/install-demo.sh
+# 非交互直接建 cron：HERMES_DAILY_CREATE_CRON=yes ./scripts/install-demo.sh
 
-# 3. 创建定时任务（以 AI 新闻为例）
-hermes cron create "0 3 * * *" --name "AI新闻" --prompt "$(cat cron-jobs/ai-news.md)"
-
-# 4. 查看任务列表
 hermes cron list
-```
-
-### 自定义你的第一个任务
-
-```bash
-# 编辑 prompt 模板
-vim cron-jobs/ai-news.md
-
-# 创建定时任务
-hermes cron create "0 8 * * *" --name "我的日报" --prompt "$(cat cron-jobs/ai-news.md)"
-
-# 测试运行
 hermes cron run <job_id>
 ```
 
+消息里应收到一条 AI 新闻摘要。格式参考：[`examples/ai-news-sample.md`](examples/ai-news-sample.md)。
+
+若尚未有 Hermes 配置：
+
+```bash
+cp config-template.yaml ~/.hermes/config.yaml
+# 再执行 hermes setup / hermes model / hermes gateway
+```
+
+一键非交互（建数据 + cron + skills）：
+
+```bash
+HERMES_DAILY_CREATE_CRON=yes HERMES_DAILY_INSTALL_SKILLS=yes ./scripts/install-demo.sh
+```
+
 ---
 
-## 模板列表
+## 🧩 安装 Skills（agentskills.io）
 
-### 📰 信息聚合类
+带 YAML frontmatter 的可移植 Skill，可被 Hermes 及其它兼容运行时加载：
 
-| 模板 | 说明 | 推荐频率 |
-|------|------|----------|
-| [AI新闻](cron-jobs/ai-news.md) | 抓取 HN + IT之家 + Twitter，生成中文摘要 | 每天 3:00 |
-| [推文草稿](cron-jobs/tweet-draft.md) | 每天生成 2-3 条推文草稿，人工审核后发布 | 每天 3:00 |
+| Skill | 作用 |
+|-------|------|
+| [`content-progression`](skills/content-progression/SKILL.md) | Progressive Cron 防重复协议 |
+| [`daily-self-review`](skills/daily-self-review/SKILL.md) | 深夜人会话复盘 |
+| [`github-morning-digest`](skills/github-morning-digest/SKILL.md) | `gh` 早间分拣 |
 
-### 📚 学习类
+```bash
+./scripts/install-skills.sh
+# 开发时用软链：
+HERMES_SKILLS_LINK=1 ./scripts/install-skills.sh
 
-| 模板 | 说明 | 推荐频率 |
-|------|------|----------|
-| [技术学习](cron-jobs/learning.md) | 按计划推进技术课程 | 每天 5:00 |
-| [英语学习](cron-jobs/english.md) | 英语词汇 + 听力 + TTS 音频 | 每天 7:30 |
-| [面试题](cron-jobs/interview.md) | 每日一道面试题 + 答案 | 每天 7:00 |
-| [代码阅读](cron-jobs/code-reading.md) | 把大文件拆成 N 天读懂，读完自动暂停 | 每天 20:00 |
-| [专题速成](cron-jobs/topic-study.md) | N 天攻克一个知识点，结合真实代码举例 | 每天 21:00 |
+hermes skills list
+```
 
-### 🤖 自我反思类
+默认安装到 `~/.hermes/skills/productivity/<skill-name>/`。详见 [`skills/README.md`](skills/README.md)。
 
-| 模板 | 说明 | 推荐频率 |
-|------|------|----------|
-| [每日复盘（做梦）](cron-jobs/daily-review.md) | 凌晨 3 点回顾昨天会话，把教训写进记忆，并建议新 Skill | 每天 3:00 |
+---
 
-### 💡 生活类
+## 📸 效果与样例
 
-| 模板 | 说明 | 推荐频率 |
-|------|------|----------|
-| [每日思考](cron-jobs/thinking.md) | 哲学/创造力/决策等领域轮换 | 每天 8:00 |
-| [理财知识](cron-jobs/finance.md) | 30天理财入门计划 | 每天 21:00 |
+<div align="center">
 
-### 🧩 Prompt 模板
+<img src="screenshots/overview.png" width="600" alt="每日推送总览">
 
-可复用、可参数化的 prompt 构件，方便你改造成自己的任务 —— 见 [prompt-templates/](prompt-templates/)。
+*产品总览示意图。具体文案形态请看下方 markdown 样例。*
 
-### 🔧 核心机制
+</div>
 
-| 文件 | 说明 |
+| 样例 | 内容 |
 |------|------|
-| [AGENTS模板](AGENTS-template.md) | 项目级 AI onboarding 文件模板 |
-| [内容递进](skills/content-progression.md) | 防止 Cron 内容重复的 Skill |
+| [AI 新闻](examples/ai-news-sample.md) | 国际/国内要点 + 点评 |
+| [面试题](examples/interview-sample.md) | 题 + 答 + 追问 |
+| [技术学习](examples/learning-sample.md) | Day N 课程卡片 |
+| [GitHub 日报](examples/github-digest-sample.md) | Needs you / PR / 30 分钟焦点 |
+| [每日复盘](examples/daily-review-sample.md) | ≤300 字夜复盘 |
+
+欢迎 PR 真实 Telegram 截图（打码）到 `screenshots/`。
 
 ---
 
-## 工作原理
+## 🧠 Progressive Cron（内容递进）
 
-### 核心架构
+**核心机制命名：** 用文件系统做 Agent 的跨 session 外部记忆。
 
-```
-┌─────────────────────────────────────────────┐
-│           Hermes Agent (框架层)              │
-│  ┌─────────┐ ┌─────────┐ ┌─────────────┐  │
-│  │  Cron   │ │ Memory  │ │   Skills    │  │
-│  │ 调度器  │ │ 记忆系统 │ │ 经验沉淀    │  │
-│  └────┬────┘ └────┬────┘ └──────┬──────┘  │
-│       │           │             │          │
-│  ┌────▼───────────▼─────────────▼──────┐  │
-│  │         Orchestration Loop          │  │
-│  │    (编排循环: Prompt → LLM → Tool)  │  │
-│  └────┬────────────────────────────────┘  │
-│       │                                    │
-└───────┼────────────────────────────────────┘
-        │
-        ▼
-┌───────────────┐
-│   LLM 模型    │  ← MIMO / DeepSeek / Claude / GPT
-└───────┬───────┘
-        │
-        ▼
-┌───────────────┐
-│  消息平台     │  ← Telegram / Discord / Slack
-└───────────────┘
+```text
+计划 plan.md  →  每日 cron  →  history/ 追加
+                   │
+        1. 算今天是第 N 天
+        2. 读计划第 N 行
+        3. 读最近 3 份 history
+        4. 生成不重复内容
+        5. 写入 day_NN.md
+        6. 超出计划 → pause(自己)
 ```
 
-### 内容递进机制（防重复）
+完整说明：[`skills/content-progression/SKILL.md`](skills/content-progression/SKILL.md)
 
-```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│ 学习计划文件  │────▶│  Cron Job    │────▶│ 历史记录目录  │
-│ (静态框架)    │     │ (每日触发)   │     │ (动态积累)    │
-└──────────────┘     └──────┬───────┘     └──────────────┘
-                            │
-                     1. 读计划 → 今天第几天？
-                     2. 读历史 → 之前讲过什么？
-                     3. 生成内容 → 不重复
-                     4. 保存到历史目录
-```
-
-关键：用**文件系统做 Agent 的外部记忆**，跨 session 也能保持连续性。
-
-### 有终点的计划：任务自己暂停自己
-
-不是每个任务都该永远跑。课程、代码阅读这类计划是有终点的。这类任务每天会先算「今天第几天」，
-一旦计划跑完，就调用 `cronjob(action='pause', job_id=<自己>)` **把自己暂停掉** —— 没有僵尸任务，不用手动清理。
-
-```
-Day 1 ─▶ Day 2 ─▶ ... ─▶ Day N ─▶ "计划已结束" ─▶ pause(自己)
-```
-
-### 绑定你的真实代码
-
-学习类任务不只是泛泛讲概念。你把任务指向自己的项目目录，它就会**从你的真实代码里找例子**（并标注文件出处）。
-学到的东西直接对应你正在写的项目，所以记得牢。
+**可单独拿走的部分：** 不必用整包，只把 Progressive Cron 嵌进你自己的任意定时任务即可。
 
 ---
 
-## 最佳实践
+## 📦 模板列表
 
-### 1. 时间分散，不要堆在一起
+### 信息聚合
 
-```yaml
-# ❌ 不好：7 个任务全在 3:00
-3:00 - 任务1, 任务2, 任务3, 任务4, 任务5, 任务6, 任务7
+| 模板 | 说明 | 建议时间 |
+|------|------|----------|
+| [AI 新闻](cron-jobs/ai-news.md) · [EN](cron-jobs/en/ai-news.md) | 网页检索 + 可选 X RSS | 03:00–08:00 |
+| [GitHub 日报](cron-jobs/github-digest.md) · [EN](cron-jobs/en/github-digest.md) | PR/CI/通知（需 `gh`） | 08:00 |
+| [推文草稿](cron-jobs/tweet-draft.md) | 2–3 条草稿，人工再发 | 09:00 |
 
-# ✅ 好：分散到不同时间
-3:00 - AI新闻
-5:00 - 技术学习
-7:00 - 面试题
-7:30 - 英语学习
-8:00 - 每日思考
-21:00 - 理财 + 推特提醒
+### 学习
+
+| 模板 | 说明 | 建议时间 |
+|------|------|----------|
+| [技术学习](cron-jobs/learning.md) · [EN](cron-jobs/en/learning.md) | 计划驱动 + 历史防重 | 05:00 |
+| [英语](cron-jobs/english.md) | 词汇听力 + TTS | 07:30 |
+| [面试题](cron-jobs/interview.md) · [EN](cron-jobs/en/interview.md) | 每日一题 | 07:00 |
+| [代码阅读](cron-jobs/code-reading.md) | N 天啃大文件 → 自 pause | 20:00 |
+| [专题速成](cron-jobs/topic-study.md) | N 天专题 + 真实代码 | 21:00 |
+
+### 自我进化
+
+| 模板 | 说明 | 建议时间 |
+|------|------|----------|
+| [每日复盘（做梦）](cron-jobs/daily-review.md) · [EN](cron-jobs/en/daily-review.md) | 只看人的会话 → MEMORY | 03:00 |
+
+### 生活
+
+| 模板 | 说明 | 建议时间 |
+|------|------|----------|
+| [思考题](cron-jobs/thinking.md) | 7 领域轮换 | 08:00 |
+| [理财](cron-jobs/finance.md) | 30 天入门（教育向） | 21:00 |
+
+### 构件
+
+| 路径 | 作用 |
+|------|------|
+| [`prompt-templates/`](prompt-templates/) | 可复制 Prompt（评审/Debug/创作等） |
+| [`skills/content-progression/`](skills/content-progression/SKILL.md) | Progressive Cron Skill |
+| [`AGENTS-template.md`](AGENTS-template.md) | 项目级 Agent onboarding |
+| [`data/`](data/) | 安装脚本写入的示例计划 |
+| [`cron-jobs/en/`](cron-jobs/en/) | 英文 Prompt |
+
+---
+
+## 架构关系
+
+```text
+Hermes Agent（运行时：Cron / Memory / Skills / 消息）
+        │
+        ▼
+~/.hermes/daily/   ← 本包装填的状态根目录
+  plan.md · history/ · MEMORY.md
+        │
+        ▼
+Telegram / Discord / Slack / …
 ```
 
-### 2. Prompt 要包含"读历史 → 避免重复 → 保存"
+### 最佳实践
 
-```markdown
-## 步骤1：确定今天是第几天
-运行 date +%Y-%m-%d，计算从 Day 1 开始的天数。
+1. **时间打散**，别 10 个任务全挤 3 点  
+2. 课程类任务必须 **读历史 → 写历史**  
+3. 真实项目放 `AGENTS.md`，学习任务才能贴你的代码  
+4. 控制推送长度，方便手机阅读  
 
-## 步骤2：读取历史记录
-ls /path/to/history/  # 读最近 3 天
+---
 
-## 步骤3：生成内容
-确保与历史不同。
+## 💰 成本说明
 
-## 步骤4：保存到历史
-保存到 /path/to/history/day_XX.md
-```
+短摘要类任务在 DeepSeek / MIMO 量级 API 上，常见是：
 
-### 3. AGENTS.md 是给 AI 的 onboarding
+| 负载 | 量级 |
+|------|------|
+| 每天 1 条 AI 新闻 | 往往 **远低于 $0.01–0.05/天** |
+| 8–10 个任务全开 | 多数情况是 **每天几分钱级**（请用你的账单核实） |
 
-```markdown
-# 项目简介
-# 目录结构
-# 代码规范
-# 已知坑点
-# 工作流程
-```
+代码精读、大量抓取更贵——先跑通 **一个** demo 任务。
 
 ---
 
 ## 常见问题
 
-### Q: 会不会每天推送同样的内容？
+**会不会每天重复？**  
+按 Progressive Cron（计划 + 历史 + 第几天）设计就不会。详见 Skill 文档。
 
-不会。每个模板都包含：
-1. 学习计划文件（静态框架）
-2. 历史记录目录（动态积累）
-3. "第几天"计算（时间锚点）
+**能否不用 Telegram？**  
+可以，Hermes 网关支持多平台。
 
-三者结合保证内容递进不重复。
-
-### Q: 用什么模型最好？
-
-| 模型 | 适合场景 | 价格 |
-|------|----------|------|
-| Xiaomi MIMO | 日常事务、中文内容 | 便宜 |
-| DeepSeek | 技术学习、代码分析 | 极便宜 |
-| Claude Sonnet | 复杂推理、长文档 | 中等 |
-| GPT-4o | 通用任务 | 中等 |
-
-建议：日常用 MIMO/DeepSeek，复杂任务用 Claude/GPT。
-
-### Q: 可以用 Discord/Slack 代替 Telegram 吗？
-
-可以。Hermes 支持 10+ 消息平台，配置方式相同。
-
-### Q: 如何调试 Cron Job？
+**调试**
 
 ```bash
-# 手动触发一次
 hermes cron run <job_id>
-
-# 查看运行日志
 hermes logs --follow
-
-# 暂停任务
 hermes cron pause <job_id>
+```
+
+**自定义数据目录**
+
+```bash
+export HERMES_DAILY_HOME=/path/to/daily
+./scripts/install-demo.sh
 ```
 
 ---
 
 ## 贡献
 
-欢迎提交 PR 添加新的 Cron Job 模板！
-
-模板格式：
-```markdown
-# 任务名称
-
-[描述任务目的]
-
-## 步骤
-1. ...
-2. ...
-
-## 输出格式
-[定义输出模板]
-```
-
----
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=schbxg/hermes-daily-automation&type=Date)](https://star-history.com/#schbxg/hermes-daily-automation&Date)
+欢迎新模板、英文翻译、打码截图、样例输出。见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ---
 
 ## 致谢
 
-- [Hermes Agent](https://github.com/NousResearch/hermes-agent) — AI Agent 框架
-- [Nous Research](https://nousresearch.com) — 框架开发团队
-- [Xiaomi MIMO](https://github.com/XiaoMi) — 大模型支持
+- [Hermes Agent](https://github.com/NousResearch/hermes-agent) / [Nous Research](https://nousresearch.com)
+- 以及让「每天跑 Agent」成本可接受的各家模型
 
 ---
 
 <div align="center">
 
-**如果觉得有用，请点个 ⭐ Star！**
+**若这套模板帮你省下从零拼 prompt 的晚上，欢迎点 ⭐，让更多人搜到能跑通的包。**
 
 </div>

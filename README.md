@@ -2,327 +2,271 @@
 
 <img src="screenshots/banner.png" width="100%" alt="Hermes Daily Automation — turn any LLM into self-running digital employees">
 
-# 🤖 Hermes Daily Automation
+# Hermes Daily Automation
 
-**Build a team of self-running digital employees with the Hermes Agent, powered by Xiaomi MIMO (or any LLM)**
+**Your personal AI morning OS** — news, learning, interview drills, GitHub triage, and a nightly self-review that writes back to memory.  
+Built as a **Progressive Cron** pack for [Hermes Agent](https://github.com/NousResearch/hermes-agent) (works with MIMO / DeepSeek / OpenAI / Claude / …).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Hermes Agent](https://img.shields.io/badge/Hermes%20Agent-Compatible-blueviolet)](https://github.com/NousResearch/hermes-agent)
-[![MIMO](https://img.shields.io/badge/Xiaomi%20MIMO-Supported-orange)](https://github.com/XiaoMi)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-*"AI shouldn't just be a tool you query. It should be a digital employee that runs on its own."*
+*AI shouldn't just answer questions. It should show up for work on its own.*
 
 **English** · [简体中文](README.zh-CN.md)
 
-[Demo](#demo) · [Quick Start](#quick-start) · [Templates](#templates) · [How It Works](#how-it-works)
+[5-minute demo](#-5-minute-demo) · [Skills](#-install-skills-agentskillsio) · [Examples](#-example-outputs) · [Progressive Cron](#-progressive-cron) · [Templates](#-templates) · [Cost](#-cost-notes)
 
 </div>
 
 ---
 
-## What Is This
+## Why this exists
 
-A collection of **automation templates** built on top of [Hermes Agent](https://github.com/NousResearch/hermes-agent) that help you spin up a daily, hands-off push system in minutes.
+Hermes already has cron, memory, and skills. What's missing for most people is a **ready-made personal OS**: opinionated jobs, default paths, anti-repeat curriculum logic, and samples you can trust.
 
-I run 10+ scheduled jobs with this setup. Every day it automatically delivers:
+This repo is that pack:
 
-- 📰 **AI news digest** (scrapes Hacker News + tech sites + Twitter)
-- 📚 **Tech learning** (a 40-day course, advanced day by day)
-- 🎧 **English listening** (auto-generated TTS audio)
-- 🎯 **Interview questions** (C++ / CUDA / system design)
-- 💰 **Personal finance** (a 30-day starter plan)
-- 🤔 **Daily thinking prompts** (rotating across 7 domains)
-- 🤖 **A nightly self-review** where the agent "dreams" — recaps yesterday and updates its own memory
-
-All unattended. Jobs fire in the early morning, and the results are waiting in Telegram when you wake up.
+| You get | Not |
+|---------|-----|
+| Installable daily jobs with `~/.hermes/daily/` defaults | Another agent framework |
+| **Progressive Cron** (plan + history + day index) | Stateless prompts that re-teach Day 1 forever |
+| Finite courses that **pause themselves** | Zombie crons after a 30-day plan ends |
+| EN + ZH templates | English README only |
 
 ---
 
-## Demo
+## ⚡ 5-minute demo
 
-<div align="center">
-
-### Daily Push Overview
-
-<img src="screenshots/overview.png" width="600" alt="Daily Automation Overview">
-
-*Everything runs at night — by morning your Telegram is already lined up for you.*
-
-</div>
-
----
-
-## Quick Start
-
-### Prerequisites
-
-1. Install [Hermes Agent](https://github.com/NousResearch/hermes-agent)
-2. Configure an LLM provider (MIMO / DeepSeek / OpenAI / Claude all work)
-3. Configure Telegram or another messaging platform
-
-### Installation
+**Prerequisites:** [Hermes Agent](https://github.com/NousResearch/hermes-agent) installed, a model provider configured, messaging (Telegram / Discord / …) working.
 
 ```bash
-# 1. Clone the repo
 git clone https://github.com/schbxg/hermes-daily-automation.git
 cd hermes-daily-automation
 
-# 2. Copy the config template
-cp config-template.yaml ~/.hermes/config.yaml
+# 1) Create ~/.hermes/daily/* + seed plans
+chmod +x scripts/install-demo.sh
+./scripts/install-demo.sh
+# English prompts: HERMES_DAILY_LANG=en ./scripts/install-demo.sh
+# Non-interactive cron: HERMES_DAILY_CREATE_CRON=yes ./scripts/install-demo.sh
 
-# 3. Create a scheduled job (AI news as an example)
-hermes cron create "0 3 * * *" --name "AI News" --prompt "$(cat cron-jobs/ai-news.md)"
-
-# 4. List your jobs
+# 2) If the script registered "AI News Demo", run it once:
 hermes cron list
-```
-
-### Customize Your First Job
-
-```bash
-# Edit the prompt template
-vim cron-jobs/ai-news.md
-
-# Create the scheduled job
-hermes cron create "0 8 * * *" --name "My Daily" --prompt "$(cat cron-jobs/ai-news.md)"
-
-# Test run it
 hermes cron run <job_id>
 ```
 
----
+You should receive one digest in your messaging app. Shape reference: [`examples/ai-news-sample.md`](examples/ai-news-sample.md).
 
-## Templates
+Optional config seed (only if you don't already have Hermes configured):
 
-### 📰 Information Aggregation
-
-| Template | Description | Suggested Schedule |
-|----------|-------------|--------------------|
-| [AI News](cron-jobs/ai-news.md) | Scrapes HN + tech sites + Twitter, generates a digest | Daily 3:00 |
-| [Tweet Drafts](cron-jobs/tweet-draft.md) | Generates 2-3 tweet drafts daily for human review | Daily 3:00 |
-
-### 📚 Learning
-
-| Template | Description | Suggested Schedule |
-|----------|-------------|--------------------|
-| [Tech Learning](cron-jobs/learning.md) | Advances through a tech course on a plan | Daily 5:00 |
-| [English](cron-jobs/english.md) | Vocabulary + listening + TTS audio | Daily 7:30 |
-| [Interview Prep](cron-jobs/interview.md) | One interview question + answer per day | Daily 7:00 |
-| [Code Reading](cron-jobs/code-reading.md) | Read a huge file over N days, then auto-pauses itself | Daily 20:00 |
-| [Topic Study](cron-jobs/topic-study.md) | N-day deep dive on one topic, with real-code examples | Daily 21:00 |
-
-### 🤖 Self-Reflection
-
-| Template | Description | Suggested Schedule |
-|----------|-------------|--------------------|
-| [Daily Review ("Dreaming")](cron-jobs/daily-review.md) | At 3 AM the agent reviews yesterday's sessions, writes lessons to memory, and suggests new skills | Daily 3:00 |
-
-### 💡 Lifestyle
-
-| Template | Description | Suggested Schedule |
-|----------|-------------|--------------------|
-| [Daily Thinking](cron-jobs/thinking.md) | Rotates through philosophy / creativity / decision-making | Daily 8:00 |
-| [Finance](cron-jobs/finance.md) | A 30-day personal finance starter plan | Daily 21:00 |
-
-### 🧩 Prompt Templates
-
-Reusable, parameterized prompt building blocks you can adapt for your own jobs — see [prompt-templates/](prompt-templates/).
-
-### 🔧 Core Mechanics
-
-| File | Description |
-|------|-------------|
-| [AGENTS template](AGENTS-template.md) | Project-level AI onboarding file template |
-| [Content Progression](skills/content-progression.md) | A Skill that prevents cron jobs from repeating content |
-
----
-
-## How It Works
-
-### Architecture
-
+```bash
+cp config-template.yaml ~/.hermes/config.yaml
+# then: hermes setup / hermes model / hermes gateway
 ```
+
+Non-interactive full bootstrap:
+
+```bash
+HERMES_DAILY_CREATE_CRON=yes HERMES_DAILY_INSTALL_SKILLS=yes ./scripts/install-demo.sh
+```
+
+---
+
+## 🧩 Install skills (agentskills.io)
+
+Portable skills with YAML frontmatter — load in Hermes (and other agentskills-compatible runtimes):
+
+| Skill | What it teaches the agent |
+|-------|---------------------------|
+| [`content-progression`](skills/content-progression/SKILL.md) | Progressive Cron protocol |
+| [`daily-self-review`](skills/daily-self-review/SKILL.md) | Nightly human-session retro |
+| [`github-morning-digest`](skills/github-morning-digest/SKILL.md) | `gh` morning triage |
+
+```bash
+./scripts/install-skills.sh
+# live symlink while developing skills:
+HERMES_SKILLS_LINK=1 ./scripts/install-skills.sh
+
+hermes skills list
+```
+
+Installs to `~/.hermes/skills/productivity/<skill-name>/` by default. See [`skills/README.md`](skills/README.md).
+
+---
+
+## 📸 Demo & examples
+
+<div align="center">
+
+<img src="screenshots/overview.png" width="600" alt="Daily automation overview">
+
+*Product overview (mock layout). Prefer the markdown samples below for concrete message shape.*
+
+</div>
+
+### Example outputs (copy-paste reality check)
+
+| Sample | What it looks like on a good day |
+|--------|----------------------------------|
+| [AI News](examples/ai-news-sample.md) | International + local bullets + editor take |
+| [Interview](examples/interview-sample.md) | One question, answer, follow-ups |
+| [Learning](examples/learning-sample.md) | Day N curriculum card |
+| [GitHub digest](examples/github-digest-sample.md) | Needs-you / PRs / 30-min focus |
+| [Daily review](examples/daily-review-sample.md) | ≤300 word night retro |
+
+> Real Telegram screenshots from your own run beat any banner — PRs adding redacted photos under `screenshots/` are welcome.
+
+---
+
+## 🧠 Progressive Cron
+
+**Named mechanism:** treat the filesystem as the agent's cross-session memory.
+
+```text
+┌──────────┐     ┌──────────┐     ┌──────────┐
+│  Plan    │────▶│ Cron job │────▶│ History  │
+│ (static) │     │  (fire)  │     │ (append) │
+└──────────┘     └────┬─────┘     └──────────┘
+                      │
+           1. date → day N
+           2. read plan row N
+           3. skim last 3 history files
+           4. generate NEW content
+           5. write history/day_NN.md
+           6. if past end → pause(self)
+```
+
+Full write-up: [`skills/content-progression/SKILL.md`](skills/content-progression/SKILL.md)
+
+**Why star this:** you can lift Progressive Cron into *any* agent cron (Hermes, OpenClaw, homemade) without adopting the rest of the pack.
+
+---
+
+## 📦 Templates
+
+### Information
+
+| Template | Description | Schedule |
+|----------|-------------|----------|
+| [AI News](cron-jobs/ai-news.md) · [EN](cron-jobs/en/ai-news.md) | HN/web + optional X RSS digest | Daily 03:00–08:00 |
+| [GitHub Digest](cron-jobs/github-digest.md) · [EN](cron-jobs/en/github-digest.md) | PR / CI / notifications triage (`gh`) | Daily 08:00 |
+| [Tweet drafts](cron-jobs/tweet-draft.md) | 2–3 human-reviewed drafts | Daily 09:00 |
+
+### Learning
+
+| Template | Description | Schedule |
+|----------|-------------|----------|
+| [Tech learning](cron-jobs/learning.md) · [EN](cron-jobs/en/learning.md) | Plan-driven course + history | Daily 05:00 |
+| [English](cron-jobs/english.md) | Vocab / listening + TTS | Daily 07:30 |
+| [Interview](cron-jobs/interview.md) · [EN](cron-jobs/en/interview.md) | One question / day | Daily 07:00 |
+| [Code reading](cron-jobs/code-reading.md) | N-day file map → self-pause | Daily 20:00 |
+| [Topic study](cron-jobs/topic-study.md) | N-day deep dive + real code | Daily 21:00 |
+
+### Self-improvement
+
+| Template | Description | Schedule |
+|----------|-------------|----------|
+| [Daily review (“dreaming”)](cron-jobs/daily-review.md) · [EN](cron-jobs/en/daily-review.md) | User-session retro → MEMORY.md | Daily 03:00 |
+
+### Lifestyle
+
+| Template | Description | Schedule |
+|----------|-------------|----------|
+| [Thinking](cron-jobs/thinking.md) | 7-domain rotation | Daily 08:00 |
+| [Finance](cron-jobs/finance.md) | 30-day starter (education only) | Daily 21:00 |
+
+### Building blocks
+
+| Path | Role |
+|------|------|
+| [`prompt-templates/`](prompt-templates/) | Copy-paste prompts (review, debug, content, …) |
+| [`skills/content-progression/`](skills/content-progression/SKILL.md) | Progressive Cron skill |
+| [`AGENTS-template.md`](AGENTS-template.md) | Project onboarding for agents |
+| [`data/`](data/) | Seed plans copied by the installer |
+| [`cron-jobs/en/`](cron-jobs/en/) | English prompt twins |
+
+---
+
+## How it fits together
+
+```text
 ┌─────────────────────────────────────────────┐
-│           Hermes Agent (framework)          │
-│  ┌─────────┐ ┌─────────┐ ┌─────────────┐  │
-│  │  Cron   │ │ Memory  │ │   Skills    │  │
-│  │ schedule│ │ system  │ │ experience  │  │
-│  └────┬────┘ └────┬────┘ └──────┬──────┘  │
-│       │           │             │          │
-│  ┌────▼───────────▼─────────────▼──────┐  │
-│  │         Orchestration Loop          │  │
-│  │      (Prompt → LLM → Tool)          │  │
-│  └────┬────────────────────────────────┘  │
-│       │                                    │
-└───────┼────────────────────────────────────┘
-        │
-        ▼
-┌───────────────┐
-│   LLM Model   │  ← MIMO / DeepSeek / Claude / GPT
-└───────┬───────┘
-        │
-        ▼
-┌───────────────┐
-│  Messaging    │  ← Telegram / Discord / Slack
-└───────────────┘
+│           Hermes Agent (runtime)            │
+│  Cron · Memory · Skills · Messaging         │
+└───────────────────┬─────────────────────────┘
+                    │ loads prompts from this pack
+                    ▼
+┌─────────────────────────────────────────────┐
+│     ~/.hermes/daily/   (your state)         │
+│  plan.md · history/ · MEMORY.md             │
+└───────────────────┬─────────────────────────┘
+                    ▼
+         Telegram / Discord / Slack / …
 ```
 
-### Content Progression (Anti-Repetition)
+### Best practices
 
-```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│ Plan file    │────▶│  Cron Job    │────▶│ History dir  │
-│ (static)     │     │ (daily fire) │     │ (accumulates)│
-└──────────────┘     └──────┬───────┘     └──────────────┘
-                            │
-                  1. Read plan → what day is it?
-                  2. Read history → what was covered?
-                  3. Generate content → no repeats
-                  4. Save to history dir
-```
-
-The key idea: **use the file system as the agent's external memory** so continuity holds across sessions.
-
-### Finite Plans That Pause Themselves
-
-Not every job should run forever. A course or a code-reading plan has an end. Each such job
-computes "what day is it", and once the plan is over it calls
-`cronjob(action='pause', job_id=<self>)` to **pause itself** — no zombie jobs, no manual cleanup.
-
-```
-Day 1 ─▶ Day 2 ─▶ ... ─▶ Day N ─▶ "plan finished" ─▶ pause(self)
-```
-
-### Grounding in Your Real Code
-
-Learning jobs don't just explain concepts in the abstract. You point them at your project
-directory, and they pull **real examples from your actual code** (with file references). What
-you learn maps directly onto what you're building, so it sticks.
+1. **Stagger jobs** (don't fire 10 crons at 03:00).
+2. Every curriculum job: **read history → write history**.
+3. Keep an `AGENTS.md` in real projects so learning jobs can ground in your code.
+4. Cap message length for mobile reading.
 
 ---
 
-## Best Practices
+## Cost notes
 
-### 1. Spread Out the Timing
+Rough order-of-magnitude for **short digests** on cheap APIs (DeepSeek / MIMO-class):
 
-```yaml
-# ❌ Bad: 7 jobs all at 3:00
-3:00 - job1, job2, job3, job4, job5, job6, job7
+| Load | Ballpark |
+|------|----------|
+| 1× AI News / day | Often **well under $0.01–0.05**/day |
+| Full pack (8–10 jobs) | Commonly **cents per day**, not dollars — measure with your provider |
 
-# ✅ Good: spread across the day
-3:00  - AI News
-5:00  - Tech Learning
-7:00  - Interview Prep
-7:30  - English
-8:00  - Daily Thinking
-21:00 - Finance + Tweet reminders
-```
-
-### 2. Every Prompt Should "Read History → Avoid Repeats → Save"
-
-```markdown
-## Step 1: Determine what day it is
-Run `date +%Y-%m-%d`, compute days elapsed since Day 1.
-
-## Step 2: Read history
-ls /path/to/history/  # read the last 3 days
-
-## Step 3: Generate content
-Make sure it differs from history.
-
-## Step 4: Save to history
-Write to /path/to/history/day_XX.md
-```
-
-### 3. AGENTS.md Is Onboarding for the AI
-
-```markdown
-# Project overview
-# Directory structure
-# Code conventions
-# Known pitfalls
-# Workflow
-```
+Heavy jobs (large code reading, long web scrapes) cost more; start with **one** demo job.
 
 ---
 
 ## FAQ
 
-### Q: Will it push the same content every day?
+**Will it repeat the same content every day?**  
+Not if you follow Progressive Cron (plan + history + day index). See the skill doc.
 
-No. Every template combines:
-1. A plan file (static framework)
-2. A history directory (accumulating record)
-3. A "what day is it" anchor (time anchor)
+**Discord/Slack instead of Telegram?**  
+Yes — Hermes multi-platform gateway; templates don't hardcode Telegram APIs.
 
-Together these guarantee content progresses without repeating.
-
-### Q: Which model is best?
-
-| Model | Best For | Cost |
-|-------|----------|------|
-| Xiaomi MIMO | Everyday tasks, Chinese content | Cheap |
-| DeepSeek | Tech learning, code analysis | Very cheap |
-| Claude Sonnet | Complex reasoning, long docs | Medium |
-| GPT-4o | General-purpose | Medium |
-
-Recommendation: MIMO/DeepSeek for daily tasks, Claude/GPT for complex ones.
-
-### Q: Can I use Discord/Slack instead of Telegram?
-
-Yes. Hermes supports 10+ messaging platforms with the same config approach.
-
-### Q: How do I debug a cron job?
+**Debug a job**
 
 ```bash
-# Trigger once manually
 hermes cron run <job_id>
-
-# Follow logs
 hermes logs --follow
-
-# Pause a job
 hermes cron pause <job_id>
+```
+
+**Override data root**
+
+```bash
+export HERMES_DAILY_HOME=/path/to/daily
+./scripts/install-demo.sh
 ```
 
 ---
 
 ## Contributing
 
-PRs adding new cron job templates are welcome!
-
-Template format:
-```markdown
-# Job name
-
-[Describe the job's purpose]
-
-## Steps
-1. ...
-2. ...
-
-## Output format
-[Define the output template]
-```
-
----
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=schbxg/hermes-daily-automation&type=Date)](https://star-history.com/#schbxg/hermes-daily-automation&Date)
+PRs welcome — new jobs, EN translations, redacted screenshots, example outputs.  
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
 ## Acknowledgements
 
-- [Hermes Agent](https://github.com/NousResearch/hermes-agent) — the AI agent framework
-- [Nous Research](https://nousresearch.com) — the team behind the framework
-- [Xiaomi MIMO](https://github.com/XiaoMi) — LLM support
+- [Hermes Agent](https://github.com/NousResearch/hermes-agent) / [Nous Research](https://nousresearch.com)
+- Xiaomi MIMO and every cheap tool-calling model that makes daily agents practical
 
 ---
 
 <div align="center">
 
-**If you find this useful, please drop a ⭐ Star!**
+**If this saved you an evening of prompt plumbing, star the repo — it helps others find a working pack.**
 
 </div>
