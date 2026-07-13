@@ -1,0 +1,7 @@
+# Progressive Cron pack manifest (learning-os)
+# format: schedule|job_name|template_stem|flags
+0 5 * * *|Tech Learning (Learning OS)|learning|plan:learning
+0 7 * * *|Interview (Learning OS)|interview|
+0 20 * * *|Code Reading (Learning OS)|code-reading|plan:code-reading
+0 21 * * *|Topic Study (Learning OS)|topic-study|plan:topic-study,optional
+0 3 * * *|Daily Review (Learning OS)|daily-review|

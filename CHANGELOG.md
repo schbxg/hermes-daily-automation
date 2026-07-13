@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.2 — 2026-07-13
+
+### Added
+
+- `scripts/install-pack.sh` — one-shot pack installer (`list`, `--dry-run`, `--en`, `--with-optional`)
+- `packs/*/manifest.tsv` job definitions for Morning Brief & Learning OS
+
+### Changed
+
+- Pack READMEs and main README document the install-pack flow
+
 ## 0.2.1 — 2026-07-13
 
 ### Added

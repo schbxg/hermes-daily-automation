@@ -19,7 +19,8 @@ Star growth for a **template pack** is mostly distribution + trust, not more YAM
 
 - Essay: https://github.com/schbxg/hermes-daily-automation/blob/main/docs/progressive-cron.md  
 - Release: https://github.com/schbxg/hermes-daily-automation/releases  
-- 5-min path: repo README → “5-minute demo”
+- 5-min path: repo README → “5-minute demo”  
+- Pack one-liner: `./scripts/install-pack.sh morning-brief`
 
 ## What not to do
 

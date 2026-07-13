@@ -137,12 +137,22 @@ hermes skills list
 
 ## 🎁 Packs（场景包）
 
+**一条命令注册 pack 内全部 cron：**
+
+```bash
+./scripts/install-pack.sh list
+./scripts/install-pack.sh morning-brief              # 工作日新闻 + GitHub
+./scripts/install-pack.sh learning-os                # 学习 + 面试 + 复盘
+./scripts/install-pack.sh morning-brief --en --with-optional
+./scripts/install-pack.sh learning-os --dry-run      # 只打印命令
+```
+
 | Pack | 适合 |
 |------|------|
 | [Morning Brief](packs/morning-brief/README.md) | 工作日：新闻 + GitHub |
 | [Learning OS](packs/learning-os/README.md) | 课程 + 面试 + 夜复盘 |
 
-见 [`packs/README.md`](packs/README.md)。
+见 [`packs/README.md`](packs/README.md)、[`scripts/install-pack.sh`](scripts/install-pack.sh)。
 
 ---
 

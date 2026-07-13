@@ -1,0 +1,7 @@
+# Progressive Cron pack manifest (morning-brief)
+# format: schedule|job_name|template_stem|flags
+# flags (comma-separated): optional, gh, plan:learning, plan:code-reading, plan:topic-study, plan:finance
+# template_stem resolves to cron-jobs/<stem>.md or cron-jobs/en/<stem>.md when HERMES_DAILY_LANG=en
+30 7 * * 1-5|AI News (Morning Brief)|ai-news|
+0 8 * * 1-5|GitHub Digest (Morning Brief)|github-digest|gh
+15 8 * * 1-5|Interview (Morning Brief)|interview|optional

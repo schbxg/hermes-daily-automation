@@ -148,14 +148,22 @@ More: [`examples/README.md`](examples/README.md).
 
 ## 🎁 Packs
 
-Ready-made job bundles (register templates listed inside):
+Ready-made job bundles — **one command registers every cron in the pack**:
+
+```bash
+./scripts/install-pack.sh list
+./scripts/install-pack.sh morning-brief              # weekday news + GitHub
+./scripts/install-pack.sh learning-os                # study + interview + review
+./scripts/install-pack.sh morning-brief --en --with-optional
+./scripts/install-pack.sh learning-os --dry-run      # print commands only
+```
 
 | Pack | For |
 |------|-----|
 | [Morning Brief](packs/morning-brief/README.md) | Weekday AI news + GitHub triage |
 | [Learning OS](packs/learning-os/README.md) | Curriculum + interview + nightly review |
 
-See [`packs/README.md`](packs/README.md).
+See [`packs/README.md`](packs/README.md) and [`scripts/install-pack.sh`](scripts/install-pack.sh).
 
 ---
 
