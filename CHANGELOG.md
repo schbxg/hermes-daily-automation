@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.1 — 2026-07-13
+
+### Added
+
+- Full English cron set under `cron-jobs/en/` (all 11 jobs)
+- `docs/progressive-cron.md` + `docs/progressive-cron.zh-CN.md` (citeable essay)
+- Packs: `packs/morning-brief`, `packs/learning-os`
+- `examples/thinking-sample.md`, `examples/README.md`
+
+### Changed
+
+- README tables link EN twins for every template
+- Progressive Cron section points at the essay + packs
+
 ## 0.2.0 — 2026-07-13
 
 ### Added

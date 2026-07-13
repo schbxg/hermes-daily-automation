@@ -15,7 +15,7 @@ Built as a **Progressive Cron** pack for [Hermes Agent](https://github.com/NousR
 
 **English** · [简体中文](README.zh-CN.md)
 
-[5-minute demo](#-5-minute-demo) · [Skills](#-install-skills-agentskillsio) · [Examples](#-example-outputs) · [Progressive Cron](#-progressive-cron) · [Templates](#-templates) · [Cost](#-cost-notes)
+[5-minute demo](#-5-minute-demo) · [Skills](#-install-skills-agentskillsio) · [Packs](#-packs) · [Examples](#-example-outputs) · [Progressive Cron](#-progressive-cron) · [Templates](#-templates) · [Cost](#-cost-notes)
 
 </div>
 
@@ -113,6 +113,9 @@ Installs to `~/.hermes/skills/productivity/<skill-name>/` by default. See [`skil
 | [Learning](examples/learning-sample.md) | Day N curriculum card |
 | [GitHub digest](examples/github-digest-sample.md) | Needs-you / PRs / 30-min focus |
 | [Daily review](examples/daily-review-sample.md) | ≤300 word night retro |
+| [Thinking](examples/thinking-sample.md) | Open question + angles |
+
+More: [`examples/README.md`](examples/README.md).
 
 > Real Telegram screenshots from your own run beat any banner — PRs adding redacted photos under `screenshots/` are welcome.
 
@@ -136,13 +139,29 @@ Installs to `~/.hermes/skills/productivity/<skill-name>/` by default. See [`skil
            6. if past end → pause(self)
 ```
 
-Full write-up: [`skills/content-progression/SKILL.md`](skills/content-progression/SKILL.md)
+**Shareable write-up (cite this):** [`docs/progressive-cron.md`](docs/progressive-cron.md) · [中文](docs/progressive-cron.zh-CN.md)  
+**Installable skill:** [`skills/content-progression/SKILL.md`](skills/content-progression/SKILL.md)
 
 **Why star this:** you can lift Progressive Cron into *any* agent cron (Hermes, OpenClaw, homemade) without adopting the rest of the pack.
 
 ---
 
+## 🎁 Packs
+
+Ready-made job bundles (register templates listed inside):
+
+| Pack | For |
+|------|-----|
+| [Morning Brief](packs/morning-brief/README.md) | Weekday AI news + GitHub triage |
+| [Learning OS](packs/learning-os/README.md) | Curriculum + interview + nightly review |
+
+See [`packs/README.md`](packs/README.md).
+
+---
+
 ## 📦 Templates
+
+Every job has **ZH** (default path) and **EN** (`cron-jobs/en/`).
 
 ### Information
 
@@ -150,17 +169,17 @@ Full write-up: [`skills/content-progression/SKILL.md`](skills/content-progressio
 |----------|-------------|----------|
 | [AI News](cron-jobs/ai-news.md) · [EN](cron-jobs/en/ai-news.md) | HN/web + optional X RSS digest | Daily 03:00–08:00 |
 | [GitHub Digest](cron-jobs/github-digest.md) · [EN](cron-jobs/en/github-digest.md) | PR / CI / notifications triage (`gh`) | Daily 08:00 |
-| [Tweet drafts](cron-jobs/tweet-draft.md) | 2–3 human-reviewed drafts | Daily 09:00 |
+| [Tweet drafts](cron-jobs/tweet-draft.md) · [EN](cron-jobs/en/tweet-draft.md) | 2–3 human-reviewed drafts | Daily 09:00 |
 
 ### Learning
 
 | Template | Description | Schedule |
 |----------|-------------|----------|
 | [Tech learning](cron-jobs/learning.md) · [EN](cron-jobs/en/learning.md) | Plan-driven course + history | Daily 05:00 |
-| [English](cron-jobs/english.md) | Vocab / listening + TTS | Daily 07:30 |
+| [English](cron-jobs/english.md) · [EN](cron-jobs/en/english.md) | Vocab / listening + TTS | Daily 07:30 |
 | [Interview](cron-jobs/interview.md) · [EN](cron-jobs/en/interview.md) | One question / day | Daily 07:00 |
-| [Code reading](cron-jobs/code-reading.md) | N-day file map → self-pause | Daily 20:00 |
-| [Topic study](cron-jobs/topic-study.md) | N-day deep dive + real code | Daily 21:00 |
+| [Code reading](cron-jobs/code-reading.md) · [EN](cron-jobs/en/code-reading.md) | N-day file map → self-pause | Daily 20:00 |
+| [Topic study](cron-jobs/topic-study.md) · [EN](cron-jobs/en/topic-study.md) | N-day deep dive + real code | Daily 21:00 |
 
 ### Self-improvement
 
@@ -172,18 +191,19 @@ Full write-up: [`skills/content-progression/SKILL.md`](skills/content-progressio
 
 | Template | Description | Schedule |
 |----------|-------------|----------|
-| [Thinking](cron-jobs/thinking.md) | 7-domain rotation | Daily 08:00 |
-| [Finance](cron-jobs/finance.md) | 30-day starter (education only) | Daily 21:00 |
+| [Thinking](cron-jobs/thinking.md) · [EN](cron-jobs/en/thinking.md) | 7-domain rotation | Daily 08:00 |
+| [Finance](cron-jobs/finance.md) · [EN](cron-jobs/en/finance.md) | 30-day starter (education only) | Daily 21:00 |
 
 ### Building blocks
 
 | Path | Role |
 |------|------|
 | [`prompt-templates/`](prompt-templates/) | Copy-paste prompts (review, debug, content, …) |
-| [`skills/content-progression/`](skills/content-progression/SKILL.md) | Progressive Cron skill |
+| [`skills/`](skills/README.md) | agentskills.io packages |
+| [`packs/`](packs/README.md) | Morning Brief / Learning OS |
+| [`docs/progressive-cron.md`](docs/progressive-cron.md) | Citeable mechanism essay |
 | [`AGENTS-template.md`](AGENTS-template.md) | Project onboarding for agents |
 | [`data/`](data/) | Seed plans copied by the installer |
-| [`cron-jobs/en/`](cron-jobs/en/) | English prompt twins |
 
 ---
 

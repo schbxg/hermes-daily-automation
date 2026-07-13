@@ -15,6 +15,12 @@ Star growth for a **template pack** is mostly distribution + trust, not more YAM
 - EN: *Personal AI morning OS for Hermes — Progressive Cron so agents don't re-teach Day 1.*  
 - ZH: *Hermes 个人晨间 OS：Progressive Cron 让定时任务按天递进、不重复。*
 
+## Link to share (copy-paste)
+
+- Essay: https://github.com/schbxg/hermes-daily-automation/blob/main/docs/progressive-cron.md  
+- Release: https://github.com/schbxg/hermes-daily-automation/releases  
+- 5-min path: repo README → “5-minute demo”
+
 ## What not to do
 
 - Don't lead with Star History at 1⭐  

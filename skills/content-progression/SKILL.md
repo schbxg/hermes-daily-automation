@@ -69,7 +69,8 @@ Copy-paste block for any prompt:
 
 Templates: [assets/plan-template.md](assets/plan-template.md), [assets/history-day-template.md](assets/history-day-template.md).  
 Deep dive: [references/protocol.md](references/protocol.md).  
-Ops issues: [references/troubleshooting.md](references/troubleshooting.md).
+Ops issues: [references/troubleshooting.md](references/troubleshooting.md).  
+Essay (share/cite): [docs/progressive-cron.md](../../docs/progressive-cron.md).
 
 ## Domain rotation (no fixed plan)
 

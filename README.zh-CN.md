@@ -15,7 +15,7 @@
 
 **简体中文** · [English](README.md)
 
-[5 分钟 Demo](#-5-分钟-demo) · [Skills 安装](#-安装-skills-agentskillsio) · [样例输出](#-效果与样例) · [Progressive Cron](#-progressive-cron-内容递进) · [模板列表](#-模板列表) · [成本](#-成本说明)
+[5 分钟 Demo](#-5-分钟-demo) · [Skills](#-安装-skills-agentskillsio) · [Packs](#-packs-场景包) · [样例](#-效果与样例) · [Progressive Cron](#-progressive-cron-内容递进) · [模板](#-模板列表) · [成本](#-成本说明)
 
 </div>
 
@@ -107,8 +107,9 @@ hermes skills list
 | [技术学习](examples/learning-sample.md) | Day N 课程卡片 |
 | [GitHub 日报](examples/github-digest-sample.md) | Needs you / PR / 30 分钟焦点 |
 | [每日复盘](examples/daily-review-sample.md) | ≤300 字夜复盘 |
+| [思考题](examples/thinking-sample.md) | 开放问题 + 角度 |
 
-欢迎 PR 真实 Telegram 截图（打码）到 `screenshots/`。
+更多见 [`examples/README.md`](examples/README.md)。欢迎 PR 真实 Telegram 截图（打码）到 `screenshots/`。
 
 ---
 
@@ -127,13 +128,27 @@ hermes skills list
         6. 超出计划 → pause(自己)
 ```
 
-完整说明：[`skills/content-progression/SKILL.md`](skills/content-progression/SKILL.md)
+**可引用长文：** [`docs/progressive-cron.zh-CN.md`](docs/progressive-cron.zh-CN.md) · [English](docs/progressive-cron.md)  
+**可安装 Skill：** [`skills/content-progression/SKILL.md`](skills/content-progression/SKILL.md)
 
-**可单独拿走的部分：** 不必用整包，只把 Progressive Cron 嵌进你自己的任意定时任务即可。
+**可单独拿走的部分：** 不必用整包，只把 Progressive Cron 嵌进任意定时任务即可。
+
+---
+
+## 🎁 Packs（场景包）
+
+| Pack | 适合 |
+|------|------|
+| [Morning Brief](packs/morning-brief/README.md) | 工作日：新闻 + GitHub |
+| [Learning OS](packs/learning-os/README.md) | 课程 + 面试 + 夜复盘 |
+
+见 [`packs/README.md`](packs/README.md)。
 
 ---
 
 ## 📦 模板列表
+
+每个任务均有中文版 + [`cron-jobs/en/`](cron-jobs/en/) 英文版。
 
 ### 信息聚合
 
@@ -141,17 +156,17 @@ hermes skills list
 |------|------|----------|
 | [AI 新闻](cron-jobs/ai-news.md) · [EN](cron-jobs/en/ai-news.md) | 网页检索 + 可选 X RSS | 03:00–08:00 |
 | [GitHub 日报](cron-jobs/github-digest.md) · [EN](cron-jobs/en/github-digest.md) | PR/CI/通知（需 `gh`） | 08:00 |
-| [推文草稿](cron-jobs/tweet-draft.md) | 2–3 条草稿，人工再发 | 09:00 |
+| [推文草稿](cron-jobs/tweet-draft.md) · [EN](cron-jobs/en/tweet-draft.md) | 2–3 条草稿，人工再发 | 09:00 |
 
 ### 学习
 
 | 模板 | 说明 | 建议时间 |
 |------|------|----------|
 | [技术学习](cron-jobs/learning.md) · [EN](cron-jobs/en/learning.md) | 计划驱动 + 历史防重 | 05:00 |
-| [英语](cron-jobs/english.md) | 词汇听力 + TTS | 07:30 |
+| [英语](cron-jobs/english.md) · [EN](cron-jobs/en/english.md) | 词汇听力 + TTS | 07:30 |
 | [面试题](cron-jobs/interview.md) · [EN](cron-jobs/en/interview.md) | 每日一题 | 07:00 |
-| [代码阅读](cron-jobs/code-reading.md) | N 天啃大文件 → 自 pause | 20:00 |
-| [专题速成](cron-jobs/topic-study.md) | N 天专题 + 真实代码 | 21:00 |
+| [代码阅读](cron-jobs/code-reading.md) · [EN](cron-jobs/en/code-reading.md) | N 天啃大文件 → 自 pause | 20:00 |
+| [专题速成](cron-jobs/topic-study.md) · [EN](cron-jobs/en/topic-study.md) | N 天专题 + 真实代码 | 21:00 |
 
 ### 自我进化
 
@@ -163,18 +178,19 @@ hermes skills list
 
 | 模板 | 说明 | 建议时间 |
 |------|------|----------|
-| [思考题](cron-jobs/thinking.md) | 7 领域轮换 | 08:00 |
-| [理财](cron-jobs/finance.md) | 30 天入门（教育向） | 21:00 |
+| [思考题](cron-jobs/thinking.md) · [EN](cron-jobs/en/thinking.md) | 7 领域轮换 | 08:00 |
+| [理财](cron-jobs/finance.md) · [EN](cron-jobs/en/finance.md) | 30 天入门（教育向） | 21:00 |
 
 ### 构件
 
 | 路径 | 作用 |
 |------|------|
-| [`prompt-templates/`](prompt-templates/) | 可复制 Prompt（评审/Debug/创作等） |
-| [`skills/content-progression/`](skills/content-progression/SKILL.md) | Progressive Cron Skill |
+| [`prompt-templates/`](prompt-templates/) | 可复制 Prompt |
+| [`skills/`](skills/README.md) | agentskills.io 包 |
+| [`packs/`](packs/README.md) | 场景包 |
+| [`docs/progressive-cron.zh-CN.md`](docs/progressive-cron.zh-CN.md) | 可引用机制文 |
 | [`AGENTS-template.md`](AGENTS-template.md) | 项目级 Agent onboarding |
-| [`data/`](data/) | 安装脚本写入的示例计划 |
-| [`cron-jobs/en/`](cron-jobs/en/) | 英文 Prompt |
+| [`data/`](data/) | 安装脚本示例计划 |
 
 ---
 
